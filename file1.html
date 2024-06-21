@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>House Sales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .title-container {
+            background-color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 50px;
+            color: #fff;
+            margin: 0;
+        }
+
+        .marque-container {
+            background-color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .marque h2 {
+            color: red;
+            margin: 0;
+        }
+
+        .houses-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+        }
+
+        .house-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .house-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .house-details {
+            margin-top: 10px;
+        }
+
+        .house-details h3 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .house-details p {
+            font-size: 16px;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .house-price {
+            font-size: 24px;
+            color: #4CAF50;
+            margin-top: 10px;
+        }
+        
+        .submit-button {
+            background-color: #4CAF50; 
+            color: white; 
+            border: none;
+            padding: 15px 32px; 
+            text-align: center;
+            text-decoration: none; 
+            display: inline-block;
+            font-size: 16px; 
+            margin: 4px 2px; 
+            cursor: pointer; 
+            border-radius: 12px; 
+            transition: background-color 0.3s ease, transform 0.3s ease; 
+        }
+
+        .submit-button:hover {
+            background-color: #45a049; 
+            transform: scale(1.05); 
+        }
+
+    </style>
+</head>
+<body>
+    <div class="title-container">
+        <h1 class="title" id="titleText">Beautiful Houses For Sale</h1>
+    </div>
+
+    <div class="marque-container">
+        <marquee class="marque"><h2>Discover Your Dream House Today! Exclusive Offers Available</h2></marquee>
+    </div>
+
+    <div class="houses-container">
+        <div class="house-box">
+            <img src="/Users/vibhavreddy/Projects/1.jpeg" alt="House in New York" class="house-image">
+            <div class="house-details">
+                <h3>Luxury House in New York</h3>
+                <p>Spacious 5-bedroom house with modern amenities.</p>
+                <div class="house-price">₹2,00,00,000</div>
+                <br>
+                <button class="submit-button">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="house-box">
+            <img src="/Users/vibhavreddy/Projects/2.jpeg " alt="House in Los Angeles" class="house-image">
+            <div class="house-details">
+                <h3>Modern House in Los Angeles</h3>
+                <p>Beautiful 4-bedroom house with a private pool.</p>
+                <div class="house-price">₹1,50,00,000</div>
+                <br>
+                <button class="submit-button">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="house-box">
+            <img src="/Users/vibhavreddy/Projects/3.jpeg" alt="House in Miami" class="house-image">
+            <div class="house-details">
+                <h3>Beach House in Miami</h3>
+                <p>Cozy 3-bedroom house with a stunning ocean view.</p>
+                <div class="house-price">₹1,20,00,000</div>
+                <br>
+                <button class="submit-button">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="house-box">
+            <img src="/Users/vibhavreddy/Projects/4.jpg" alt="House in San Francisco" class="house-image">
+            <div class="house-details">
+                <h3>Elegant House in San Francisco</h3>
+                <p>Charming 4-bedroom house in a prime location.</p>
+                <div class="house-price">₹1,80,00,000</div>
+                <br>
+                <button class="submit-button">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <h2 style="font-size:20px"> For More Details Contact <br> Call Us At : +91 52525 56231 <br>Email:info@beautifulhouses.com</h2>
+
+    <script>
+        function changeTextColor() {
+            var title = document.getElementById("titleText");
+            var colors = ["red", "blue", "green", "orange", "purple"];  
+            var currentColor = title.style.color; 
+            var currentIndex = colors.indexOf(currentColor);
+            if (currentIndex === -1 || currentIndex === colors.length - 1) {
+                title.style.color = colors[0];
+            } else {
+                title.style.color = colors[currentIndex + 1];
+            }
+        }
+        setInterval(changeTextColor, 1000);
+    </script>
+</body>
+</html>
