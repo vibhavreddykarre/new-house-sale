@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConstructPro - Business Management</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="30" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="90" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            33% { transform: translateY(-10px) translateX(5px); }
+            66% { transform: translateY(5px) translateX(-5px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: slideDown 1s ease;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            letter-spacing: -2px;
+        }
+
+        .header .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.4rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.4s ease;
+            animation: fadeInUp 1s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #FFD700;
+            text-shadow: 0 5px 15px rgba(255,215,0,0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: white;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .section-card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.4s ease;
+            animation: slideInLeft 1s ease;
+        }
+
+        .section-card:nth-child(2) {
+            animation: slideInRight 1s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .projects-icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .loans-icon {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .section-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+            transition: transform 0.6s ease;
+        }
+
+        .section-card:hover .section-icon::before {
+            transform: rotate(45deg) translateX(100%);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .section-subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .create-form {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .form-input {
+            flex: 1;
+            padding: 18px 20px;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 25px rgba(102,126,234,0.2);
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            padding: 18px 30px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 10px 25px rgba(102,126,234,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102,126,234,0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+            color: white;
+            padding: 12px 20px;
+            font-size: 14px;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(86,171,47,0.4);
+        }
+
+        .items-list {
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            border-left: 5px solid transparent;
+            position: relative;
+        }
+
+        .item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2));
+            border-radius: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .item:hover::before {
+            opacity: 1;
+        }
+
+        .item:hover {
+            transform: translateX(5px) translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .item.project { border-left-color: #667eea; }
+        .item.loan { border-left-color: #f5576c; }
+
+        .item-name {
+            flex: 1;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
+        .quick-actions {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .fab {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(255,107,107,0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 20px 45px rgba(255,107,107,0.6);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.5); }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
+            .main-grid { grid-template-columns: 1fr; gap: 20px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .section-card { padding: 25px; }
+            .create-form { flex-direction: column; }
+            .form-input, .btn-primary { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-hard-hat"></i> ConstructPro</h1>
+            <p class="subtitle">Professional Construction Business Management</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-home stat-icon"></i>
+                <span class="stat-number" id="projectCount">0</span>
+                <div class="stat-label">Active Projects</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-money-bill-wave stat-icon"></i>
+                <span class="stat-number" id="loanCount">0</span>
+                <div class="stat-label">Active Loans</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-chart-line stat-icon"></i>
+                <span class="stat-number">$125K</span>
+                <div class="stat-label">Total Revenue</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-users stat-icon"></i>
+                <span class="stat-number">24</span>
+                <div class="stat-label">Team Members</div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Projects Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon projects-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div>
+                        <h2 class="section-title">Construction Projects</h2>
+                        <p class="section-subtitle">Manage residential & commercial builds</p>
+                    </div>
+                </div>
+
+                <form action="/create_project" method="POST" class="create-form">
+                    <input type="text" name="project_name" class="form-input" placeholder="New Project Name (e.g., Downtown Office Complex)" required>
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-plus-circle"></i> Create Project
+                    </button>
+                </form>
+
+                <div class="items-list" id="projectsList">
+                    <div class="empty-state">
+                        <i class="fas fa-home"></i>
+                        <p>No construction projects yet.<br>Start your first build!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loans Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon loans-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div>
+                        <h2 class="section-title">Business Loans</h2>
+                        <p class="section-subtitle">Track equipment & project financing</p>
+                    </div>
+                </div>
+
+                <form action="/create_loan" method="POST" class="create-form">
+                    <input type="text" name="loan_name" class="form-input" placeholder="New Loan Name (e.g., Equipment Financing)" required>
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-plus-circle"></i> Create Loan
+                    </button>
+                </form>
+
+                <div class="items-list" id="loansList">
+                    <div class="empty-state">
+                        <i class="fas fa-university"></i>
+                        <p>No loans registered yet.<br>Add your financing details!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-actions">
+        <button class="fab" onclick="showQuickCreate()" title="Quick Add">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <script>
+        // Sample data - replace with actual data from Flask backend
+        let projects = [
+            'Luxury Villa Project',
+            'Office Complex Downtown',
+            'Shopping Mall Renovation'
+        ];
+
+        let loans = [
+            'Equipment Loan - Caterpillar',
+            'Project Finance - Villa',
+            'Working Capital Loan'
+        ];
+
+        function loadData() {
+            document.getElementById('projectCount').textContent = projects.length;
+            document.getElementById('loanCount').textContent = loans.length;
+
+            // Render projects
+            const projectsList = document.getElementById('projectsList');
+            if (projects.length > 0) {
+                projectsList.innerHTML = projects.map(project => `
+                    <div class="item project">
+                        <div class="item-name">
+                            <i class="fas fa-home" style="margin-right: 10px; color: #667eea;"></i>
+                            ${project}
+                        </div>
+                        <a href="/project/${project}" class="btn btn-success">
+                            <i class="fas fa-external-link-alt"></i> Open
+                        </a>
+                    </div>
+                `).join('');
+            }
+
+            // Render loans
+            const loansList = document.getElementById('loansList');
+            if (loans.length > 0) {
+                loansList.innerHTML = loans.map(loan => `
+                    <div class="item loan">
+                        <div class="item-name">
+                            <i class="fas fa-university" style="margin-right: 10px; color: #f5576c;"></i>
+                            ${loan}
+                        </div>
+                        <a href="/loan/${loan}" class="btn btn-success">
+                            <i class="fas fa-external-link-alt"></i> Open
+                        </a>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function showQuickCreate() {
+            // Add pulse animation
+            document.querySelector('.fab').style.animation = 'pulse 0.6s ease';
+            setTimeout(() => {
+                document.querySelector('.fab').style.animation = '';
+            }, 600);
+            
+            // Show notification
+            showNotification('Quick create feature coming soon!', 'info');
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.innerHTML = `
+                <div style="
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 15px 25px;
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                    color: white;
+                    border-radius: 10px;
+                    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+                    z-index: 2000;
+                    animation: slideInFromRight 0.5s ease;
+                ">
+                    <i class="fas fa-info-circle" style="margin-right: 10px;"></i>
+                    ${message}
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutToRight 0.5s ease';
+                setTimeout(() => document.body.removeChild(notification), 500);
+            }, 3000);
+        }
+
+        // Add animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.1); }
+                100% { transform: scale(1); }
+            }
+            @keyframes slideInFromRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutToRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        loadData();
+
+        // Add floating animation to background
+        setInterval(() => {
+            const bg = document.querySelector('.animated-bg::before');
+            if (bg) bg.style.animationDuration = (Math.random() * 10 + 15) + 's';
+        }, 5000);
+    </script>
+</body>
+</html>
